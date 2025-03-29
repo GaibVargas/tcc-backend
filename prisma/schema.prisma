@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  public_id String @unique @default(uuid())
+
+  name String
+  role String
+  locale String
+
+  lms_iss String
+  lms_platform String
+  lms_user_id String
+  lms_version String
+  lms_client_id String
+  lms_outcome_source_id String
+  lms_outcome_service_url String
+
+  auth_refresh_token String?
+
+  quizzes Quiz[]
+  players Player[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([lms_iss, lms_user_id])
+}
+
+model Quiz {
+  id Int @id @default(autoincrement())
+  public_id String @unique @default(uuid())
+
+  title String
+  is_deleted Boolean @default(false)
+
+  author User @relation(fields: [author_id], references: [id])
+  author_id Int
+
+  questions Question[]
+  sessions Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+  public_id String @unique @default(uuid())
+
+  type String
+  description String
+  time_limit Int?
+  correct_text_answer String
+  is_deleted Boolean @default(false)
+
+  quiz Quiz @relation(fields: [quiz_id], references: [id])
+  quiz_id Int
+
+  options QuestionOption[]
+  answers Answer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model QuestionOption {
+  id Int @id @default(autoincrement())
+  public_id String @unique @default(uuid())
+
+  description String
+  is_correct_answer Boolean @default(false)
+  is_deleted Boolean @default(false)
+
+  question Question @relation(fields: [question_id], references: [id])
+  question_id Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id Int @id @default(autoincrement())
+  public_id String @unique @default(uuid())
+
+  code String @unique
+  status String
+  current_question_public_id String
+  grades_status String @default("not-sended")
+
+  quiz Quiz @relation(fields: [quiz_id], references: [id])
+  quiz_id Int
+
+  players Player[]
+  answers Answer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Player {
+  id Int @id @default(autoincrement())
+
+  lms_iss String
+  lms_platform String
+  lms_user_id String
+  lms_version String
+  lms_client_id String
+  lms_outcome_source_id String
+  lms_outcome_service_url String
+
+  score Int @default(0)
+  grade Float @default(0)
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  session Session @relation(fields: [session_id], references: [id])
+  session_id Int
+
+  answers Answer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([user_id, session_id])
+}
+
+model Answer {
+  id Int @id @default(autoincrement())
+  
+  value String
+
+  player Player @relation(fields: [player_id], references: [id])
+  player_id Int
+
+  session Session @relation(fields: [session_id], references: [id])
+  session_id Int
+
+  question Question @relation(fields: [question_id], references: [id])
+  question_id Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([player_id, session_id, question_id])
+}

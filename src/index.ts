@@ -20,7 +20,7 @@ const server = Fastify({
 
 server.register(fastifyFormbody)
 server.register(cors, {
-  origin: config.host.FRONTEND_URL,
+  origin: '*',
 })
 server.register(socketIOPlugin)
 

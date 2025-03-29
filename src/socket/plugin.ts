@@ -1,10 +1,9 @@
 import { FastifyPluginCallback } from 'fastify'
 import { Server } from 'socket.io'
 import { config } from '../config/env'
-import { ClientToServerEvents, ServerToClientEvents, SocketData } from './types'
+import { ClientToServerEvents, EventsMap, ServerToClientEvents, SocketData } from './types'
 import { verifyToken } from '../auth/token'
 import { minUserSchema } from '../entities/user/type'
-import { EventsMap } from 'socket.io/dist/typed-events'
 import { registerSocketHandlers } from './event-listeners'
 
 const socketIOPlugin: FastifyPluginCallback = (fastify, _options, done) => {

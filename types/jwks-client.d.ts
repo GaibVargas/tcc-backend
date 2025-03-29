@@ -1,16 +1,16 @@
 declare module 'jwks-client' {
-  type Key = {
+  export type Key = {
     kid: string
     publicKey: string
     rsaPublicKey?: string
   }
-  type JWKSClient = {
+  export type JWKSClient = {
     getSigningKey: (
       kid: string | undefined,
       callback: (err: null | Error, key: Key) => void,
     ) => void
   }
-  type JWKSPayload = {
+  export type JWKSPayload = {
     jwksUri: string
   }
 

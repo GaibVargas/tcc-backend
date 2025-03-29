@@ -1,6 +1,5 @@
 import { Server, Socket } from 'socket.io'
 import { MinUser } from '../entities/user/type'
-import { EventsMap } from 'socket.io/dist/typed-events'
 import {
   InstructorSessionState,
   ParticipantSessionState,
@@ -37,6 +36,10 @@ export interface ServerToClientEvents {
 
 export interface SocketData {
   user: MinUser
+}
+
+export interface EventsMap {
+  [event: string]: (...args: unknown[]) => void;
 }
 
 export type CustomServer = Server<

@@ -1,8 +1,8 @@
-import { Paginated, PaginationQuery } from '../../common/pagination'
-import HttpRequestError from '../../utils/error'
-import { MinUser, SessionPlayer } from '../user/type'
-import sessionModel from './model'
-import { SessionGradesStatus, SessionItem, SessionReport } from './type'
+import { Paginated, PaginationQuery } from '../../common/pagination.js'
+import HttpRequestError from '../../utils/error.js'
+import { MinUser, SessionPlayer } from '../user/type.js'
+import sessionModel from './model.js'
+import { SessionGradesStatus, SessionItem, SessionReport } from './type.js'
 
 export async function getFinishedSessionsByAuthor(
   user: MinUser,

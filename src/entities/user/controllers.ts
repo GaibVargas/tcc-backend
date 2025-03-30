@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import userServices, { LoggedUserTokens } from './services'
-import { MinUser } from './type'
-import { userVerify } from '../../auth/services'
+import userServices, { LoggedUserTokens } from './services.js'
+import { MinUser } from './type.js'
+import { userVerify } from '../../auth/services.js'
 
 interface AuthQueryParams {
   auth_token: string

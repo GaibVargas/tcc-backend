@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
-import { authenticationPlugin } from '../../auth/plugin'
-import userControllers from './controllers'
+import { authenticationPlugin } from '../../auth/plugin.js'
+import userControllers from './controllers.js'
 
 export default function userRoutes(
   fastify: FastifyInstance,

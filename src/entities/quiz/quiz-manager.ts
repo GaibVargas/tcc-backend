@@ -1,10 +1,10 @@
-import { GradeItem, Question, QuestionType, Quiz } from './type'
+import { GradeItem, Question, QuestionType, Quiz } from './type.js'
 import {
   InstructorSessionQuestionFeedback,
   ParticipantSessionQuestionFeedback,
   SessionQuestion,
   SessionQuiz,
-} from '../session/type'
+} from '../session/type.js'
 
 type AnswerFeedback = {
   is_correct: boolean

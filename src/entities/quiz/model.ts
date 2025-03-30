@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import prisma from '../../config/db'
-import userModel from '../user/model'
-import { MinUser } from '../user/type'
+import prisma from '../../config/db.js'
+import userModel from '../user/model.js'
+import { MinUser } from '../user/type.js'
 import {
   CreateQuizPayload,
   QuestionType,
@@ -10,12 +10,12 @@ import {
   quiz_schema,
   QuizResume,
   UpdateQuizPayload,
-} from './type'
+} from './type.js'
 import {
   getPrismaPagination,
   Paginated,
   PaginationQuery,
-} from '../../common/pagination'
+} from '../../common/pagination.js'
 
 export async function createQuiz(
   user: MinUser,

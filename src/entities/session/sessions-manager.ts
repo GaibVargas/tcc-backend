@@ -1,7 +1,7 @@
-import { Quiz } from '../quiz/type'
-import { MinUser } from '../user/type'
-import { Session } from './session'
-import { CustomSocket } from '../../socket/types'
+import { Quiz } from '../quiz/type.js'
+import { MinUser } from '../user/type.js'
+import { Session } from './session.js'
+import { CustomSocket } from '../../socket/types.js'
 
 export class SessionsManager {
   private static instance: SessionsManager

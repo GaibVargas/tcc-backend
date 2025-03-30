@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import authController from './controller'
+import authController from './controller.js'
 
 export default function authRoutes(
   fastify: FastifyInstance,

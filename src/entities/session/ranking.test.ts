@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach } from '@jest/globals'
-import { Ranking, RankingItem } from './ranking'
+import { Ranking, RankingItem } from './ranking.js'
 
 describe('Ranking class', () => {
   let ranking: Ranking

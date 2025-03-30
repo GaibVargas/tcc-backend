@@ -1,7 +1,7 @@
-import { CustomServer, CustomSocket } from './types'
-import { delay } from '../utils/time'
-import { SessionsManager } from '../entities/session/sessions-manager'
-import { SessionIdentification } from '../entities/session/type'
+import { CustomServer, CustomSocket } from './types.js'
+import { delay } from '../utils/time.js'
+import { SessionsManager } from '../entities/session/sessions-manager.js'
+import { SessionIdentification } from '../entities/session/type.js'
 
 const sessions_manager = SessionsManager.getInstance()
 export async function instructorJoin(

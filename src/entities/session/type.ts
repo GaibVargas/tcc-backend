@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { Question, question_type_schema, QuestionOption, Quiz, quiz_schema } from '../quiz/type'
-import { minUserSchema } from '../user/type'
+import { Question, question_type_schema, QuestionOption, Quiz, quiz_schema } from '../quiz/type.js'
+import { minUserSchema } from '../user/type.js'
 
 export enum SessionModes {
   INDIVIDUAL = 'individual',

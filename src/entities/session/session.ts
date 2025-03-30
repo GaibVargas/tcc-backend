@@ -5,18 +5,18 @@ import {
   RankingType,
   RecoveredSessionAnswer,
   SessionStatus,
-} from './type'
-import { generateRandomString } from '../../utils/string'
-import { Quiz } from '../quiz/type'
-import { MinUser } from '../user/type'
-import { QuizManager } from '../quiz/quiz-manager'
-import { CustomSocket } from '../../socket/types'
-import { Ranking } from './ranking'
+} from './type.js'
+import { generateRandomString } from '../../utils/string.js'
+import { Quiz } from '../quiz/type.js'
+import { MinUser } from '../user/type.js'
+import { QuizManager } from '../quiz/quiz-manager.js'
+import { CustomSocket } from '../../socket/types.js'
+import { Ranking } from './ranking.js'
 import sessionModel, {
   SessionQuestionAnswerData,
   SessionUpdateData,
-} from './model'
-import userServices from '../user/services'
+} from './model.js'
+import userServices from '../user/services.js'
 
 type Participant = {
   user: MinUser

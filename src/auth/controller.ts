@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import authService from './services'
-import { LoggedUserTokens } from '../entities/user/services'
+import authService from './services.js'
+import { LoggedUserTokens } from '../entities/user/services.js'
 
 export async function refreshToken(
   req: FastifyRequest,

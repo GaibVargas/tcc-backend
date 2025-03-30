@@ -1,9 +1,9 @@
-import { config } from '../config/env'
-import { LoggedUserTokens } from '../entities/user/services'
-import { generateUserAccessToken, verifyToken } from './token'
-import HttpRequestError from '../utils/error'
-import { MinUser } from '../entities/user/type'
-import userModel from '../entities/user/model'
+import { config } from '../config/env.js'
+import { LoggedUserTokens } from '../entities/user/services.js'
+import { generateUserAccessToken, verifyToken } from './token.js'
+import HttpRequestError from '../utils/error.js'
+import { MinUser } from '../entities/user/type.js'
+import userModel from '../entities/user/model.js'
 
 export async function refreshAccessToken(
   refresh_token: string,

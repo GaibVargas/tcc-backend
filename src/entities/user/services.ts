@@ -3,10 +3,10 @@ import {
   generateUserAuthToken,
   generateUserRefreshToken,
   verifyToken,
-} from '../../auth/token'
-import { config } from '../../config/env'
-import HttpRequestError from '../../utils/error'
-import userModel from './model'
+} from '../../auth/token.js'
+import { config } from '../../config/env.js'
+import HttpRequestError from '../../utils/error.js'
+import userModel from './model.js'
 import {
   CreateUserPayload,
   MinUser,
@@ -15,7 +15,7 @@ import {
   rolesSchema,
   UserLMSData,
   UserRoles,
-} from './type'
+} from './type.js'
 
 export function getValidatedUserRole(role: string): UserRoles {
   return rolesSchema.parse(role)

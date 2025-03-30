@@ -1,8 +1,8 @@
 import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
-import { verifyToken } from './token'
-import { config } from '../config/env'
-import { minUserSchema, UserRoles } from '../entities/user/type'
 import fastifyPlugin from 'fastify-plugin'
+import { verifyToken } from './token.js'
+import { config } from '../config/env.js'
+import { minUserSchema, UserRoles } from '../entities/user/type.js'
 
 function authenticationMiddleware(req: FastifyRequest, reply: FastifyReply, done: () => void): void {
   if (req.routeOptions.config.skipAuth) {

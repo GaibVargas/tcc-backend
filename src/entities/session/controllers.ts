@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { userVerify } from '../../auth/services'
-import quizServices from '../quiz/services'
-import { SessionsManager } from './sessions-manager'
+import { userVerify } from '../../auth/services.js'
+import quizServices from '../quiz/services.js'
+import { SessionsManager } from './sessions-manager.js'
 import {
   answer_session_question_schema,
   create_session_payload_schema,
@@ -11,12 +11,12 @@ import {
   SessionGradesStatus,
   SessionItem,
   SessionReport,
-} from './type'
-import HttpRequestError from '../../utils/error'
-import { Paginated, pagination_query_schema, PaginationQuery } from '../../common/pagination'
-import sessionServices from './services'
-import { MoodleLTIServices } from '../../lti/moodle/services'
-import { PublicIdParams } from '../../common/query'
+} from './type.js'
+import HttpRequestError from '../../utils/error.js'
+import { Paginated, pagination_query_schema, PaginationQuery } from '../../common/pagination.js'
+import sessionServices from './services.js'
+import { MoodleLTIServices } from '../../lti/moodle/services.js'
+import { PublicIdParams } from '../../common/query.js'
 
 export async function createSession(
   req: FastifyRequest,

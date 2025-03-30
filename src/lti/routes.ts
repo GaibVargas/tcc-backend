@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
-import { MoodleLTIServices } from './moodle/services'
-import LTIControllers from './controllers'
+import { MoodleLTIServices } from './moodle/services.js'
+import LTIControllers from './controllers.js'
 
 const moodleLTIServices = new MoodleLTIServices()
 const ltiControllers = new LTIControllers(moodleLTIServices)

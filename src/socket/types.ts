@@ -1,12 +1,12 @@
 import { Server, Socket } from 'socket.io'
-import { MinUser } from '../entities/user/type'
+import { MinUser } from '../entities/user/type.js'
 import {
   InstructorSessionState,
   ParticipantSessionState,
   SessionIdentification,
   SessionParticipants,
   SessionParticipantsQuestionAnswered,
-} from '../entities/session/type'
+} from '../entities/session/type.js'
 
 export interface ClientToServerEvents {
   'instructor:connect': (payload: SessionIdentification) => Promise<void>

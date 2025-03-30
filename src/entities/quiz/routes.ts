@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
-import { authenticationPlugin, isInstructorPlugin } from '../../auth/plugin'
-import quizController from './controllers'
+import { authenticationPlugin, isInstructorPlugin } from '../../auth/plugin.js'
+import quizController from './controllers.js'
 
 export default function quizRoutes(
   fastify: FastifyInstance,

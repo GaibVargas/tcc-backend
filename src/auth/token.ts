@@ -1,14 +1,14 @@
-import { JwtPayload, sign, SignOptions, verify } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import ms from 'ms'
-import { MinUser } from '../entities/user/type'
-import { config } from '../config/env'
+import { MinUser } from '../entities/user/type.js'
+import { config } from '../config/env.js'
 
 function generateToken(
   payload: string | Buffer | object,
   secret: string,
-  options: SignOptions = {},
+  options: jwt.SignOptions = {},
 ): string {
-  return sign(payload, secret, options)
+  return jwt.sign(payload, secret, options)
 }
 
 type TokenExpiration = number | ms.StringValue
@@ -33,7 +33,7 @@ export function generateUserAuthToken(user: MinUser): string {
 
 interface VerifyTokenValidResult {
   valid: true
-  decoded: JwtPayload | string
+  decoded: jwt.JwtPayload | string
 }
 
 interface VerifyTokenInvalidResult {
@@ -45,7 +45,7 @@ type VerifyTokenResult = VerifyTokenValidResult | VerifyTokenInvalidResult
 
 export function verifyToken(token: string, secret: string): VerifyTokenResult {
   try {
-    const decoded = verify(token, secret)
+    const decoded = jwt.verify(token, secret)
     return { valid: true, decoded }
   } catch (error: unknown) {
     if (error instanceof Error && 'name' in error) {

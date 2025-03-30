@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import quizServices from './services'
-import { create_quiz_schema, Quiz, QuizResume, update_quiz_schema } from './type'
-import { userVerify } from '../../auth/services'
-import { Paginated, pagination_query_schema, PaginationQuery } from '../../common/pagination'
-import { PublicIdParams } from '../../common/query'
+import quizServices from './services.js'
+import { create_quiz_schema, Quiz, QuizResume, update_quiz_schema } from './type.js'
+import { userVerify } from '../../auth/services.js'
+import { Paginated, pagination_query_schema, PaginationQuery } from '../../common/pagination.js'
+import { PublicIdParams } from '../../common/query.js'
 
 export async function createQuiz(
   req: FastifyRequest,

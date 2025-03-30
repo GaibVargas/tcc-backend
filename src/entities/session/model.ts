@@ -1,6 +1,6 @@
 import { Session } from '@prisma/client'
 import { z } from 'zod'
-import prisma from '../../config/db'
+import prisma from '../../config/db.js'
 import {
   PlayerGradeAndScoreItem,
   RecoveredSession,
@@ -11,14 +11,14 @@ import {
   SessionStatus,
   session_report_schema,
   SessionReport,
-} from './type'
+} from './type.js'
 import {
   Paginated,
   PaginationQuery,
   getPrismaPagination,
-} from '../../common/pagination'
-import { SessionPlayer, sessionPlayerSchema } from '../user/type'
-import { question_type_schema, QuestionType } from '../quiz/type'
+} from '../../common/pagination.js'
+import { SessionPlayer, sessionPlayerSchema } from '../user/type.js'
+import { question_type_schema, QuestionType } from '../quiz/type.js'
 
 export async function createSession(
   code: string,

@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { JWKS, LTIServices } from './services'
-import { getUserAuthToken, updateOrCreateUser } from '../entities/user/services'
-import { config } from '../config/env'
+import { JWKS, LTIServices } from './services.js'
+import { getUserAuthToken, updateOrCreateUser } from '../entities/user/services.js'
+import { config } from '../config/env.js'
 
 export default class LTIControllers {
   private ltiService: LTIServices

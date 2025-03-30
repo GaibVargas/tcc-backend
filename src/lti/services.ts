@@ -1,4 +1,4 @@
-import { CreateUserPayload, SessionPlayer } from '../entities/user/type'
+import { CreateUserPayload, SessionPlayer } from '../entities/user/type.js'
 
 export type JWKSKey = {
   kty: string

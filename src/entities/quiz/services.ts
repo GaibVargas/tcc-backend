@@ -1,9 +1,9 @@
-import { Paginated, PaginationQuery } from '../../common/pagination'
-import HttpRequestError from '../../utils/error'
-import userModel from '../user/model'
-import { MinUser } from '../user/type'
-import quizModel from './model'
-import { CreateQuizPayload, Quiz, QuizResume, UpdateQuizPayload } from './type'
+import { Paginated, PaginationQuery } from '../../common/pagination.js'
+import HttpRequestError from '../../utils/error.js'
+import userModel from '../user/model.js'
+import { MinUser } from '../user/type.js'
+import quizModel from './model.js'
+import { CreateQuizPayload, Quiz, QuizResume, UpdateQuizPayload } from './type.js'
 
 export async function createQuiz(user: MinUser, quiz: CreateQuizPayload): Promise<Quiz> {
   const new_quiz = await quizModel.createQuiz(user, quiz)

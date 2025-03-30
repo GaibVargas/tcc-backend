@@ -3,19 +3,19 @@ import fs from 'node:fs'
 import path from 'node:path'
 import axios from 'axios'
 import xmlbuilder from 'xmlbuilder'
-import { CreateUserPayload, SessionPlayer } from '../../entities/user/type'
-import { JWKS, LTIServices } from '../services'
-import { signMessage, verifyMessage, verifyMessageOnISS } from './jwt'
-import moodleUris from './links'
-import { LTI_REDIRECT_URL } from '../constants'
+import { CreateUserPayload, SessionPlayer } from '../../entities/user/type.js'
+import { JWKS, LTIServices } from '../services.js'
+import { signMessage, verifyMessage, verifyMessageOnISS } from './jwt.js'
+import moodleUris from './links.js'
+import { LTI_REDIRECT_URL } from '../constants.js'
 import {
   getUserPayloadSchema,
   GradesToken,
   MoodleUser,
   startLauchPayloadSchema,
   StartLaunchPayload,
-} from './types'
-import { getUserRole } from '../../entities/user/services'
+} from './types.js'
+import { getUserRole } from '../../entities/user/services.js'
 
 export class MoodleLTIServices implements LTIServices {
   async startLaunch(payload: unknown): Promise<string> {

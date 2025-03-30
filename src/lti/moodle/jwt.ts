@@ -1,20 +1,12 @@
 import fs from 'node:fs'
-import {
-  GetPublicKeyOrSecret,
-  JwtHeader,
-  JwtPayload,
-  sign,
-  SigningKeyCallback,
-  SignOptions,
-  verify,
-} from 'jsonwebtoken'
-import jwksClient from 'jwks-client'
-import moodleUris from './links'
 import { resolve } from 'node:path'
+import jwt from 'jsonwebtoken'
+import jwksClient from 'jwks-client'
+import moodleUris from './links.js'
 
 type JWTMessage = string | Buffer | object
 
-export async function signMessage(message: JWTMessage, options: SignOptions = {}): Promise<string> {
+export async function signMessage(message: JWTMessage, options: jwt.SignOptions = {}): Promise<string> {
   const privateKeyFilepath = resolve(
     __dirname,
     '..',
@@ -24,7 +16,7 @@ export async function signMessage(message: JWTMessage, options: SignOptions = {}
     'private_key.pem',
   )
   const privateKey = await fs.promises.readFile(privateKeyFilepath, 'utf8')
-  return sign(message, privateKey, {
+  return jwt.sign(message, privateKey, {
     algorithm: 'RS256',
     expiresIn: '5m',
     ...options,
@@ -33,7 +25,7 @@ export async function signMessage(message: JWTMessage, options: SignOptions = {}
 
 export async function verifyMessage(
   message: string,
-): Promise<string | JwtPayload> {
+): Promise<string | jwt.JwtPayload> {
   const publicKeyFilepath = resolve(
     __dirname,
     '..',
@@ -44,14 +36,14 @@ export async function verifyMessage(
   )
   const publicKey = await fs.promises.readFile(publicKeyFilepath, 'utf8')
 
-  const decoded = verify(message, publicKey, {
+  const decoded = jwt.verify(message, publicKey, {
     algorithms: ['RS256'],
   })
 
   return decoded
 }
 
-type JWTVerifyResult = string | JwtPayload | undefined
+type JWTVerifyResult = string | jwt.JwtPayload | undefined
 
 export async function verifyMessageOnISS(
   message: string,
@@ -59,7 +51,7 @@ export async function verifyMessageOnISS(
 ): Promise<JWTVerifyResult> {
   try {
     const decodedMsg = await new Promise<JWTVerifyResult>((resolve, reject) => {
-      verify(
+      jwt.verify(
         message,
         getISSJWKSKey(iss),
         { algorithms: ['RS256'] },
@@ -75,11 +67,11 @@ export async function verifyMessageOnISS(
   }
 }
 
-export function getISSJWKSKey(iss: string): GetPublicKeyOrSecret {
+export function getISSJWKSKey(iss: string): jwt.GetPublicKeyOrSecret {
   const client = jwksClient({
     jwksUri: moodleUris(iss).certs,
   })
-  return (header: JwtHeader, callback: SigningKeyCallback) => {
+  return (header: jwt.JwtHeader, callback: jwt.SigningKeyCallback) => {
     client.getSigningKey(header.kid, (err, key) => {
       if (err) {
         callback(err)

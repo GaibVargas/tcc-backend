@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
-import { CreateUserPayload, MinUser, UserLMSData } from './type'
-import prisma from '../../config/db'
-import { getValidatedUserRole } from './services'
+import { CreateUserPayload, MinUser, UserLMSData } from './type.js'
+import prisma from '../../config/db.js'
+import { getValidatedUserRole } from './services.js'
 
 export async function findMinUserByPublicId(
   public_id: string,

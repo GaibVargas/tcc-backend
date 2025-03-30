@@ -103,7 +103,7 @@ const start = async (): Promise<void> => {
     await prisma.$connect()
     const session_manager = SessionsManager.getInstance()
     await session_manager.recoverSessions()
-    await server.listen({ port: config.host.PORT })
+    await server.listen({ port: config.host.PORT, host: "0.0.0.0" })
   } catch (err) {
     server.log.error(err)
     await prisma.$disconnect()

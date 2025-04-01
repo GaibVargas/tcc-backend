@@ -1,26 +1,27 @@
 import jose from 'node-jose'
 import fs from 'node:fs'
 import path from 'node:path'
+import url from 'node:url'
 
 const dir_name = 'keys'
 
-const ignore_folders = ['node_modules', '.git', 'prisma', 'src', 'dist']
-function printDirectoryTree(dirPath, indent = '') {
-  try {
-    const items = fs.readdirSync(dirPath, { withFileTypes: true })
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-    for (const item of items) {
-      const itemPath = path.join(dirPath, item.name)
-      if (ignore_folders.includes(item.name)) continue
-      if (item.isDirectory()) {
-        console.log(`${indent}📂 ${item.name}`)
-        printDirectoryTree(itemPath, indent + '  ') // Recursão para subpastas
+function printFilePermissions(filepath) {
+  if (!fs.existsSync(filepath)) {
+    console.error("Arquivo NÃO encontrado:", filepath)
+  } else {
+    console.log("Arquivo encontrado:", filepath)
+    fs.stat(filepath, (err, stats) => {
+      if (err) {
+        console.error("Erro ao obter status do arquivo:", err)
       } else {
-        console.log(`${indent}📄 ${item.name}`);
+        console.log("Permissões:", stats.mode.toString(8))
+        console.log("Dono:", stats.uid)
+        console.log("Grupo:", stats.gid)
       }
-    }
-  } catch (err) {
-    console.error(`Erro ao acessar ${dirPath}: ${err.message}`)
+    })
   }
 }
 
@@ -51,7 +52,9 @@ async function generateKeys() {
 
   console.info('Keys were generated.')
 
-  printDirectoryTree(process.cwd())
+  printFilePermissions(path.resolve(__dirname, '..', '..', dir_name, 'jwks_public.json'))
+  printFilePermissions(path.resolve(__dirname, '..', '..', dir_name, 'private_key.pem'))
+  printFilePermissions(path.resolve(__dirname, '..', '..', dir_name, 'public_key.pem'))
 }
 
 generateKeys()

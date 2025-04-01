@@ -101,6 +101,7 @@ export function getISSJWKSKey(iss: string): jwt.GetPublicKeyOrSecret {
   return (header: jwt.JwtHeader, callback: jwt.SigningKeyCallback) => {
     client.getSigningKey(header.kid, (err, key) => {
       if (err) {
+        console.error(err)
         callback(err)
       } else {
         const signingKey = key.rsaPublicKey || key.publicKey

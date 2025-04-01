@@ -1,4 +1,5 @@
 import { randomBytes } from 'node:crypto'
+import url from 'node:url'
 import fs from 'node:fs'
 import path from 'node:path'
 import axios from 'axios'
@@ -97,6 +98,9 @@ export class MoodleLTIServices implements LTIServices {
   }
 
   async getJWKSKeys(): Promise<JWKS> {
+    const __filename = url.fileURLToPath(import.meta.url)
+    const __dirname = path.dirname(__filename)
+
     const jwks_keys_filepath = path.resolve(
       __dirname,
       '..',

@@ -79,7 +79,7 @@ server.setErrorHandler((error, _request, reply) => {
 
   return reply.status(500).send({
     status_code: 500,
-    error: 'UnknownError',
+    error: 'Unknown Error',
     message: 'An unknown error occurred',
   })
 })

@@ -1,13 +1,20 @@
 import fs from 'node:fs'
-import { resolve } from 'node:path'
+import path from 'node:path'
+import url from 'node:url'
 import jwt from 'jsonwebtoken'
 import jwksClient from 'jwks-client'
 import moodleUris from './links.js'
 
 type JWTMessage = string | Buffer | object
 
-export async function signMessage(message: JWTMessage, options: jwt.SignOptions = {}): Promise<string> {
-  const privateKeyFilepath = resolve(
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+export async function signMessage(
+  message: JWTMessage,
+  options: jwt.SignOptions = {},
+): Promise<string> {
+  const privateKeyFilepath = path.resolve(
     __dirname,
     '..',
     '..',
@@ -26,7 +33,7 @@ export async function signMessage(message: JWTMessage, options: jwt.SignOptions 
 export async function verifyMessage(
   message: string,
 ): Promise<string | jwt.JwtPayload> {
-  const publicKeyFilepath = resolve(
+  const publicKeyFilepath = path.resolve(
     __dirname,
     '..',
     '..',

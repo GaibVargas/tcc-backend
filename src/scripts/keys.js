@@ -15,6 +15,8 @@ function printDirectoryTree(dirPath, indent = '') {
       if (item.isDirectory()) {
         console.log(`${indent}📂 ${item.name}`)
         printDirectoryTree(itemPath, indent + '  ') // Recursão para subpastas
+      } else {
+        console.log(`${indent}📄 ${item.name}`);
       }
     }
   } catch (err) {

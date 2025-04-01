@@ -2,9 +2,9 @@ import jose from 'node-jose'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const dir_name = 'keys'
+const dir_name = 'keys2'
 
-const ignore_folders = ['node_modules', '.git', 'prisma']
+const ignore_folders = ['node_modules', '.git', 'prisma', 'src', 'dist']
 function printDirectoryTree(dirPath, indent = '') {
   try {
     const items = fs.readdirSync(dirPath, { withFileTypes: true })

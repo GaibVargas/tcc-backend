@@ -13,6 +13,7 @@ import quizRoutes from './entities/quiz/routes.js'
 import socketIOPlugin from './socket/plugin.js'
 import sessionRoutes from './entities/session/routes.js'
 import { SessionsManager } from './entities/session/sessions-manager.js'
+import { generateKeys } from './scripts/keys.js'
 
 const server = Fastify({
   logger: true,
@@ -100,6 +101,7 @@ server.ready((err) => {
 
 const start = async (): Promise<void> => {
   try {
+    await generateKeys()
     await prisma.$connect()
     const session_manager = SessionsManager.getInstance()
     await session_manager.recoverSessions()

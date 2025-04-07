@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach } from '@jest/globals'
-import { QuizManager } from './quiz-manager.js'
-import { QuestionType, Quiz } from './type.js'
+import { QuizManager } from './quiz-manager'
+import { QuestionType, Quiz } from './type'
 
 describe('QuizManager', () => {
   let quiz: Quiz

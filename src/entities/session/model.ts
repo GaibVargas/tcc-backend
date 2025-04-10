@@ -180,10 +180,7 @@ export async function findOngoingSessionsByAuthorId(
     where: {
       quiz: { author_id: user_id },
       NOT: {
-        OR: [
-          { status: SessionStatus.ENDING },
-          { status: SessionStatus.FINISHED },
-        ],
+        status: SessionStatus.FINISHED,
       },
     },
     orderBy: { updatedAt: 'desc' },
@@ -327,7 +324,9 @@ export async function updateSessionGradeStatusById(
   })
 }
 
-export async function findSessionReportByPubliId(id: string): Promise<SessionReport | null> {
+export async function findSessionReportByPubliId(
+  id: string,
+): Promise<SessionReport | null> {
   const session_id = await findSessionIdByPublicId(id)
   const session = await prisma.session.findFirst({
     where: { public_id: id },
@@ -373,7 +372,7 @@ export async function findSessionReportByPubliId(id: string): Promise<SessionRep
     },
   })
   if (!session) return null
-  const questions = session.quiz.questions.map(question => {
+  const questions = session.quiz.questions.map((question) => {
     let correct_answer: string
     if (question_type_schema.parse(question.type) === QuestionType.TEXT) {
       correct_answer = question.correct_text_answer
@@ -381,24 +380,26 @@ export async function findSessionReportByPubliId(id: string): Promise<SessionRep
       correct_answer =
         question.options.find((o) => o.is_correct_answer)?.public_id ?? ''
     }
-    const answers = question.answers.map(answer => {
+    const answers = question.answers.map((answer) => {
       let given_answer: string
       if (question_type_schema.parse(question.type) === QuestionType.TEXT) {
         given_answer = answer.value
       } else {
         given_answer =
-          question.options.find((o) => o.public_id === answer.value)?.description ?? ''
+          question.options.find((o) => o.public_id === answer.value)
+            ?.description ?? ''
       }
 
       return {
         ...answer,
         given_answer,
-        is_correct: answer.value.toLowerCase() === correct_answer.toLowerCase()
+        is_correct: answer.value.toLowerCase() === correct_answer.toLowerCase(),
       }
     })
-    const correct_answer_percentage = session.players.length > 0
-      ? answers.filter(a => a.is_correct).length / session.players.length
-      : 0
+    const correct_answer_percentage =
+      session.players.length > 0
+        ? answers.filter((a) => a.is_correct).length / session.players.length
+        : 0
     return {
       ...question,
       answers,
@@ -409,8 +410,10 @@ export async function findSessionReportByPubliId(id: string): Promise<SessionRep
     ...session,
     quiz: {
       ...session.quiz,
-      questions: questions.filter(q => !q.is_deleted || (q.is_deleted && q.answers.length > 0) ),
-    }
+      questions: questions.filter(
+        (q) => !q.is_deleted || (q.is_deleted && q.answers.length > 0),
+      ),
+    },
   })
 }
 

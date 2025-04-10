@@ -262,6 +262,7 @@ export async function findFinishedSessionsByAuthorId(
 export async function savePlayersGradeAndScore(
   grades_scores: PlayerGradeAndScoreItem[],
 ): Promise<void> {
+  if (!grades_scores.length) return
   const query = `
     UPDATE "Player"
     SET 

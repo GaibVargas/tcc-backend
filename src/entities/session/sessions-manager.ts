@@ -39,11 +39,11 @@ export class SessionsManager {
   async removeSession(code: string): Promise<void> {
     const session = this.getSession(code)
     await session.endSession()
-    // Remove a sessão depois de 30 segundos dando esse tempo para que os clientes conectados sejam notificados devidamente
+    // Remove a sessão depois de 10 segundos dando esse tempo para que os clientes conectados sejam notificados devidamente
     setTimeout(() => {
       console.log('REMOVING SESSION')
       this.active_sessions.delete(code)
-    }, 30 * 1000)
+    }, 10 * 1000)
   }
 
   getSession(code: string): Session {

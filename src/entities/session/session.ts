@@ -184,11 +184,15 @@ export class Session {
     )
   }
 
-  async nextStep(): Promise<boolean> {
+  private clearQuestionTimeout(): void {
     if (this.question_timeout_id) {
       clearTimeout(this.question_timeout_id)
       this.question_timeout_id = null
     }
+  }
+
+  async nextStep(): Promise<boolean> {
+    this.clearQuestionTimeout()
     let finished_session = false
     switch (this.status) {
       case SessionStatus.WAITING_START:
@@ -236,6 +240,7 @@ export class Session {
   }
 
   async endSession(): Promise<void> {
+    this.clearQuestionTimeout()
     await this.saveSessionUpdate({ status: SessionStatus.FINISHED })
     await this.saveUsersGradeAndScore()
     this.sockets.instructor?.emit('game:end', { code: this.code })

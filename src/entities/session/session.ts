@@ -9,7 +9,7 @@ import {
 import { generateRandomString } from '../../utils/string.js'
 import { Quiz } from '../quiz/type.js'
 import { MinUser } from '../user/type.js'
-import { QuizManager } from '../quiz/quiz-manager.js'
+import { Answer, QuizManager } from '../quiz/quiz-manager.js'
 import { CustomSocket } from '../../socket/types.js'
 import { Ranking } from './ranking.js'
 import sessionModel, {
@@ -314,7 +314,7 @@ export class Session {
     user_public_id: string,
     question_public_id: string,
     answer: string,
-  ): void {
+  ): Answer | void {
     if (this.status !== SessionStatus.SHOWING_QUESTION) return
     const result = this.quiz_manager.answerQuestion(
       user_public_id,
@@ -338,6 +338,7 @@ export class Session {
         result.feedback.streak_bonus +
         result.feedback.velocity_bonus,
     })
+    return result
   }
 
   private getParticipantsId(): string[] {

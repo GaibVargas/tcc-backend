@@ -117,7 +117,11 @@ export class QuizManager {
     }
     const question_answers = this.answers.get(question_public_id)
     if (!question_answers) this.answers.set(question_public_id, [answer])
+    else if (question_answers.some((a) => a.user_public_id === user_public_id))
+      // Usuário já respondeu a questão
+      return
     else question_answers.push(answer)
+
     return answer
   }
 

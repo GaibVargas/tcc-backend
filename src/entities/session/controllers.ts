@@ -143,11 +143,16 @@ export function answerSessionQuestion(
     })
   }
   const body = answer_session_question_schema.parse(req.body)
-  session.answerQuestion(
+  const result = session.answerQuestion(
     req.user.public_id,
     body.question_public_id,
     body.answer,
   )
+  if (!result)
+    throw new HttpRequestError({
+      status_code: 409,
+      message: 'Question already answered'
+    })
 }
 
 export async function finishedSessionsByAuthor(

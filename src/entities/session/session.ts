@@ -176,9 +176,12 @@ export class Session {
     if (!question.time_limit) return
     this.question_timeout_id = setTimeout(
       () => {
-        this.nextStep.bind(this)()
+        this.nextStep
+          .bind(this)()
           .then()
-          .catch((e) => console.error('Error on ending question automatically', e))
+          .catch((e) =>
+            console.error('Error on ending question automatically', e),
+          )
       },
       question.time_limit * 1000 + 500, // Espera meio segundo a mais
     )
@@ -241,8 +244,12 @@ export class Session {
 
   async endSession(): Promise<void> {
     this.clearQuestionTimeout()
-    await this.saveSessionUpdate({ status: SessionStatus.FINISHED })
+    if (this.status === SessionStatus.SHOWING_QUESTION)
+      await this.saveQuestionAnswers(
+        this.quiz_manager.getCurrentQuestion().public_id,
+      )
     await this.saveUsersGradeAndScore()
+    await this.saveSessionUpdate({ status: SessionStatus.FINISHED })
     this.sockets.instructor?.emit('game:end', { code: this.code })
     for (const socket of this.sockets.participants.values()) {
       socket.emit('game:end', { code: this.code })

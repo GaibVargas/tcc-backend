@@ -16,7 +16,7 @@ By default the backend of the project is available at http://localhost:3333
 ### Production
 
 ```bash
-npx migrate deploy
+npx prisma migrate deploy
 npm install --production
 npx prisma generate
 npm run build

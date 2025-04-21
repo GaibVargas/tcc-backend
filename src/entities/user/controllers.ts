@@ -14,9 +14,22 @@ export async function loginUser(
   return await userServices.loginUser(req.query.auth_token)
 }
 
-export function getUser(req: FastifyRequest, _req: FastifyReply): MinUser {
+type GetUserResponse = MinUser & {
+  context: { course: string; activity: string }
+}
+export async function getUser(
+  req: FastifyRequest,
+  _req: FastifyReply,
+): Promise<GetUserResponse> {
   userVerify(req.user)
-  return req.user
+  const lms = await userServices.getUserLMSDataById(req.user.id)
+  return {
+    ...req.user,
+    context: {
+      course: lms.lms_context_course,
+      activity: lms.lms_context_activity,
+    },
+  }
 }
 
 const userControllers = {

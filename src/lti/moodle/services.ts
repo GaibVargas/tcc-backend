@@ -71,6 +71,10 @@ export class MoodleLTIServices implements LTIServices {
         version:
           moodleUser['https://purl.imsglobal.org/spec/lti/claim/version'],
         user_id: moodleUser.sub,
+        context: {
+          course: moodleUser['https://purl.imsglobal.org/spec/lti/claim/context'].title,
+          activity: moodleUser['https://purl.imsglobal.org/spec/lti/claim/resource_link'].title,
+        },
         outcome: {
           source_id:
             moodleUser[

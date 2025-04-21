@@ -17,6 +17,10 @@ const lmsSchema = z.object({
     source_id: z.string(),
     service_url: z.string().url(),
   }),
+  context: z.object({
+    course: z.string().optional(),
+    activity: z.string().optional(),
+  }),
 })
 
 export const userSchema = z.object({
@@ -51,6 +55,8 @@ export const userLMSDataSchema = z.object({
   lms_client_id: z.string(),
   lms_outcome_source_id: z.string(),
   lms_outcome_service_url: z.string(),
+  lms_context_course: z.string(),
+  lms_context_activity: z.string(),
 })
 export type UserLMSData = z.infer<typeof userLMSDataSchema>
 
@@ -75,5 +81,9 @@ export const stubUser: User = {
       source_id: 'source_id',
       service_url: 'http://localhost/moodle',
     },
+    context: {
+      course: '',
+      activity: '',
+    }
   },
 }

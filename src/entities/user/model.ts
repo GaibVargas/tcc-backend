@@ -59,6 +59,8 @@ export async function createUser(user: CreateUserPayload): Promise<MinUser> {
       lms_client_id: user.lms.client_id,
       lms_outcome_source_id: user.lms.outcome.source_id,
       lms_outcome_service_url: user.lms.outcome.service_url,
+      lms_context_course: user.lms.context.course,
+      lms_context_activity: user.lms.context.activity,
     },
   })
   return {
@@ -88,6 +90,8 @@ export async function updateUserByLMSId(
       lms_client_id: user.lms.client_id,
       lms_outcome_source_id: user.lms.outcome.source_id,
       lms_outcome_service_url: user.lms.outcome.service_url,
+      lms_context_course: user.lms.context.course,
+      lms_context_activity: user.lms.context.activity,
     },
   })
   return {
@@ -119,6 +123,8 @@ export async function getUserLMSDataById(id: number): Promise<UserLMSData> {
       lms_client_id: true,
       lms_outcome_source_id: true,
       lms_outcome_service_url: true,
+      lms_context_course: true,
+      lms_context_activity: true,
     },
   })
 }

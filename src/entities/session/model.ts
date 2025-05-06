@@ -59,6 +59,7 @@ export type SessionQuestionAnswerData = {
 export async function saveSessionQuestionAnswersById(
   answers: SessionQuestionAnswerData[],
 ): Promise<void> {
+  if (!answers.length) return
   await prisma.answer.createMany({
     data: answers,
   })

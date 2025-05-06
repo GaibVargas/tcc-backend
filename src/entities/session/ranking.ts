@@ -27,7 +27,10 @@ export class Ranking {
     this.insertSorted(id, newScore)
   }
 
-  getRanking(top: number | null = null): RankingResultItem[] {
+  getRanking(
+    top: number | null = null,
+    user_public_id: string | null = null,
+  ): RankingResultItem[] {
     if (!this.sorted_players.length) return []
 
     let rank = 1
@@ -38,10 +41,30 @@ export class Ranking {
       if (this.sorted_players[i].score !== this.sorted_players[i - 1].score)
         rank++
 
-      if (top && rank > top) break
       if (!(rank in ranking)) ranking[String(rank)] = []
       ranking[String(rank)].push({ ...this.sorted_players[i] })
     }
-    return Object.entries(ranking).map(([rank, entries]) => ({ rank, entries }))
+
+    const show_individual_ranking = user_public_id !== null
+    let individual_is_in_top = false
+    let show_ranking: Record<string, RankingItem[]> = {}
+    for (let i = 1; i <= rank; i++) {
+      if (top === null || i <= top) {
+        show_ranking[String(i)] = ranking[String(i)]
+        if (show_individual_ranking && !individual_is_in_top)
+          individual_is_in_top = ranking[String(i)].some(
+            (player) => player.id === user_public_id,
+          )
+      } else if (
+        show_individual_ranking &&
+        !individual_is_in_top &&
+        ranking[String(i)].some((player) => player.id === user_public_id)
+      ) {
+        const player_ranking = ranking[String(i)].find(player => player.id === user_public_id)
+        if (!player_ranking) continue
+        show_ranking[String(i)] = [player_ranking]
+      }
+    }
+    return Object.entries(show_ranking).map(([rank, entries]) => ({ rank, entries }))
   }
 }

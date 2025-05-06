@@ -258,7 +258,11 @@ export class Session {
   }
 
   private async saveSessionUpdate(data: SessionUpdateData): Promise<void> {
-    await sessionModel.updateSessionById(this.db_id, data)
+    try {
+      await sessionModel.updateSessionById(this.db_id, data)
+    } catch (error) {
+      console.error(`Error updating session to state ${data}`, error)
+    }
   }
 
   private async saveQuestionAnswers(question_public_id: string): Promise<void> {
@@ -272,7 +276,20 @@ export class Session {
       const player_id = this.participants.get(answer.user_public_id)?.player_id
       const question_id =
         this.quiz_manager.getQuestionIdByPublicId(question_public_id)
+
       if (!player_id || !question_id) continue
+      
+      // Verifica respostas duplicadas
+      if (
+        formatted_answers.findIndex(
+          (a) =>
+            a.player_id === player_id &&
+            a.question_id === question_id &&
+            a.session_id === this.db_id,
+        ) !== -1
+      )
+        continue
+
       formatted_answers.push({
         value: answer.given_answer,
         session_id: this.db_id,
@@ -280,7 +297,11 @@ export class Session {
         player_id,
       })
     }
-    await sessionModel.saveSessionQuestionAnswersById(formatted_answers)
+    try {
+      await sessionModel.saveSessionQuestionAnswersById(formatted_answers)
+    } catch (error) {
+      console.error('Error saving question answers', error)
+    }
   }
 
   private async saveUsersGradeAndScore(): Promise<void> {
@@ -314,7 +335,11 @@ export class Session {
         }
       }
     }
-    await sessionModel.savePlayersGradeAndScore([...users_grade_score.values()])
+    try {
+      await sessionModel.savePlayersGradeAndScore([...users_grade_score.values()])
+    } catch (error) {
+      console.error('Error saving users grade and score')  
+    }
   }
 
   answerQuestion(
@@ -352,8 +377,8 @@ export class Session {
     return Array.from(this.participants.keys())
   }
 
-  private getRanking(top: number | null = null): RankingType {
-    const ranking = this.ranking.getRanking(top)
+  private getRanking(top: number | null = null, user_public_id: string | null = null): RankingType {
+    const ranking = this.ranking.getRanking(top, user_public_id)
     return ranking.map((r) => ({
       rank: r.rank,
       players: r.entries.map((e) => ({
@@ -447,7 +472,7 @@ export class Session {
       return {
         ...base,
         status: SessionStatus.FEEDBACK_SESSION,
-        ranking: this.getRanking(3),
+        ranking: this.getRanking(3, user_public_id),
       }
     }
 
